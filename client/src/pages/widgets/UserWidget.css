@@ -1,0 +1,91 @@
+.widget-wrapper {
+    padding: 1.5rem 1.5rem 0.75rem 1.5rem;
+    background-color: #f4f4f4; /* Use an appropriate color */
+    border-radius: 0.75rem;
+  }
+  
+  .user-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 1.1rem;
+    cursor: pointer;
+  }
+  
+  .user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .user-name {
+    font-weight: 500;
+    color: #333; /* Use your desired dark color */
+  }
+  
+  .user-name:hover {
+    color: #0066cc; /* Hover color for username */
+  }
+  
+  .friends-count {
+    color: #888; /* Use a neutral medium color */
+  }
+  
+  .user-location,
+  .user-occupation {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .user-location p,
+  .user-occupation p {
+    color: #888;
+  }
+  
+  .user-stats {
+    padding: 1rem 0;
+  }
+  
+  .stat-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+  }
+  
+  .stat-number {
+    font-weight: 500;
+    color: #333; /* Use main color */
+  }
+  
+  .social-profiles {
+    padding: 1rem 0;
+  }
+  
+  .social-profiles h4 {
+    font-size: 1rem;
+    color: #333; /* Main color */
+    font-weight: 500;
+    margin-bottom: 1rem;
+  }
+  
+  .profile-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 0.5rem;
+  }
+  
+  .profile-title {
+    font-weight: 500;
+    color: #333; /* Main color */
+  }
+  
+  hr {
+    border: none;
+    border-top: 1px solid #ccc;
+    margin: 1rem 0;
+  }
+  

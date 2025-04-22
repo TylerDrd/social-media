@@ -1,0 +1,23 @@
+.profile-page {
+    width: 100%;
+  }
+  
+  .profile-content {
+    display: flex;
+    justify-content: center;
+    padding: 2rem 6%;
+    gap: 2rem;
+  }
+  
+  .left-column {
+    flex-basis: 26%;
+  }
+  
+  .center-column {
+    flex-basis: 42%;
+  }
+  
+  .spacer {
+    margin: 2rem 0;
+  }
+  

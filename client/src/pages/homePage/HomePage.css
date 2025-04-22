@@ -1,0 +1,45 @@
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+  flex-wrap: wrap;
+  max-width: 100%;
+  overflow: hidden; /* Prevents overflowing */
+  box-sizing: border-box;
+}
+
+.column {
+  flex-grow: 1;
+  box-sizing: border-box;
+}
+
+.user-column {
+  flex-basis: 20%; /* Shrinks when needed */
+  min-width: 250px; /* Prevents the column from becoming too narrow */
+}
+
+.posts-column {
+  flex-basis: 55%; /* Gives more space to the middle column */
+  min-width: 300px; /* Ensures the middle column doesn't shrink too much */
+}
+
+.friends-column {
+  flex-basis: 20%; /* Shrinks when needed */
+  min-width: 250px; /* Prevents the column from becoming too narrow */
+}
+
+@media (max-width: 1024px) {
+  .flex-between {
+    flex-direction: column;
+  }
+
+  .column {
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+
+  .posts-column {
+    margin-top: 0;
+  }
+}
