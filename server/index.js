@@ -29,7 +29,7 @@ app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
-app.use(cors({ origin: 'https://social-media-theta-topaz.vercel.app/' }));
+app.use(cors({ origin: 'https://social-media-45w7mb049-jainil-patels-projects-c6189d1f.vercel.app/' }));
 app.use("/assets", express.static(path.join(__dirname, "public/assets"))); //storing assets locally
 
 /* FILE STORAGE */
