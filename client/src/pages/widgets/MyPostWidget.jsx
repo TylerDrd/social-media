@@ -27,11 +27,21 @@ import {
       if (image) {
         formData.append("picture", image); // TODO: write code of uploading it in backend here.
         formData.append("picturePath", image.name);
-        const {url} = await fetch(`${API_URL}/s3Url`,{
-          method: "GET",
-          headers: {Authorization: `Bearer ${token}`},
-        }).then(res=>res.json())
-        console.log("Url aa gaya oyee", url)
+        // get s3 url 
+        const { url } = await fetch(`${API_URL}/posts/s3Url?contentType=${image.type}`).then(res => res.json());
+
+        // posting image
+        await fetch(url, {
+          method: "PUT",
+          // headers: {
+          //   "Content-Type": image.type,
+          // },
+          body: image
+        });
+        // add this in the data
+        const imageUrl = url.split('?')[0]
+        console.log(imageUrl)
+
       }
   
       const response = await fetch(`${API_URL}/posts`, {
