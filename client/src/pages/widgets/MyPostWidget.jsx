@@ -25,8 +25,13 @@ import {
       formData.append("userId", _id);
       formData.append("description", post);
       if (image) {
-        formData.append("picture", image);
+        formData.append("picture", image); // TODO: write code of uploading it in backend here.
         formData.append("picturePath", image.name);
+        const {url} = await fetch(`${API_URL}/s3Url`,{
+          method: "GET",
+          headers: {Authorization: `Bearer ${token}`},
+        }).then(res=>res.json())
+        console.log("Url aa gaya oyee", url)
       }
   
       const response = await fetch(`${API_URL}/posts`, {
