@@ -29,10 +29,30 @@ app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));
 app.use(bodyParser.json({ limit: "30mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "30mb", extended: true }));
-app.use(cors({ origin: 'https://social-media-45w7mb049-jainil-patels-projects-c6189d1f.vercel.app/' }));
 app.use("/assets", express.static(path.join(__dirname, "public/assets"))); //storing assets locally
 
+
+
+const allowedOrigins = [
+  'http://localhost:5173',
+  'https://social-media-45w7mb049-jainil-patels-projects-c6189d1f.vercel.app'
+];
+
+app.use(cors({
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
+  credentials: true
+}));
+
 /* FILE STORAGE */
+//const storage = multer.memoryStorage();
+
+// for storing in local storage
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "public/assets");
@@ -44,6 +64,19 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 /* ROUTES WITH FILES */
+// const uploadToS3 = async (file) => {
+//   const params = {
+//     Bucket: process.env.S3_BUCKET_NAME,
+//     Key: `${Date.now()}-${file.originalname}`, // unique name
+//     Body: file.buffer,
+//     ContentType: file.mimetype,
+//     ACL: "public-read", // if you want to serve the image directly via URL
+//   };
+
+//   const data = await s3.upload(params).promise();
+//   return data.Location; // this is the public S3 URL
+// };
+
 app.post("/auth/register", upload.single("picture"), register); // not in routes because we need to use 'upload'
 //route,middleware (store image locally in assets/public),actual logic which is storing register info
 app.post("/posts", verifyToken, upload.single("picture"), createPost);

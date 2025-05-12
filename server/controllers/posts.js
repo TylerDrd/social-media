@@ -1,6 +1,6 @@
 import Post from "../models/Post.js";
 import User from "../models/User.js";
-
+import {generateUploadURL} from "../middleware/s3.js";
 /* CREATE */
 export const createPost = async (req, res) => {
   try {
@@ -92,4 +92,15 @@ export const addComment = async (req, res) => {
   } catch (err) {
     res.status(404).json({ message: err.message });
   }
+};
+
+export const getS3Url = async (req,res) => {
+  try{
+    console.log("Reached here")
+    const url = generateUploadURL()
+    res.send({url}) 
+  }catch (err){
+    res.status(404).json({ message: err.message });
+  }
+
 };
