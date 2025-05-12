@@ -96,9 +96,9 @@ export const addComment = async (req, res) => {
 
 export const getS3Url = async (req,res) => {
   try{
-    console.log("Reached here")
-    const url = generateUploadURL()
-    res.send({url}) 
+    const contentType = req.query.contentType || "image/jpeg";
+    const url = await generateUploadURL(contentType)
+    res.send({url})
   }catch (err){
     res.status(404).json({ message: err.message });
   }
