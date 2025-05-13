@@ -52,7 +52,7 @@ app.use(cors({
 /* FILE STORAGE */
 //const storage = multer.memoryStorage();
 
-// for storing in local storage
+//for storing in local storage
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "public/assets");
@@ -61,7 +61,7 @@ const storage = multer.diskStorage({
     cb(null, file.originalname);
   },
 }); // this syntax found from github repo of multer, this is how to save our file
-const upload = multer({ storage });
+const upload = multer({storage});
 
 /* ROUTES WITH FILES */
 // const uploadToS3 = async (file) => {
@@ -77,14 +77,16 @@ const upload = multer({ storage });
 //   return data.Location; // this is the public S3 URL
 // };
 
-app.post("/auth/register", upload.single("picture"), register); // not in routes because we need to use 'upload'
-//route,middleware (store image locally in assets/public),actual logic which is storing register info
-app.post("/posts", verifyToken, upload.single("picture"), createPost);
-
 /* ROUTES */
 app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
+
+app.post("/auth/register", upload.single("picture"), register); // not in routes because we need to use 'upload'
+//route,middleware (store image locally in assets/public),actual logic which is storing register info
+app.post("/posts", verifyToken, createPost);
+
+
 
 /* MONGOOSE SETUP */
 const PORT = process.env.PORT || 6001;

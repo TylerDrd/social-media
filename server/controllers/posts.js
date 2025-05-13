@@ -4,8 +4,16 @@ import {generateUploadURL} from "../middleware/s3.js";
 /* CREATE */
 export const createPost = async (req, res) => {
   try {
+    console.log(req.body)
     const { userId, description, picturePath } = req.body;
+    if (!userId ) {
+      return res.status(400).json({ message: "Missing required fields" });
+    }
+
     const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
     const newPost = new Post({
       userId,
       firstName: user.firstName,
