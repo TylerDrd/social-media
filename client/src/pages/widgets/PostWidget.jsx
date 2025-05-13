@@ -26,7 +26,7 @@ const PostWidget = ({
   const loggedInUserId = useSelector((state) => state.user._id);
   const isLiked = Boolean(likes[loggedInUserId]);
   const likeCount = Object.keys(likes).length;
-
+  console.log(picturePath)
   const patchLike = async () => {
     
     const response = await fetch(`${API_URL}/posts/${postId}/like`, {
@@ -68,7 +68,7 @@ const PostWidget = ({
       {picturePath && (
         <img
           className="post-image"
-          src={`${API_URL}/assets/${picturePath}`}
+          src={`${picturePath}`}
           alt="post"
         />
       )}

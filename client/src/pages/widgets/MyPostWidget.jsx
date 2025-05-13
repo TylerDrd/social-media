@@ -1,6 +1,7 @@
 import {
     //EditOutlined,
     DeleteOutlined,
+    Description,
     ImageOutlined,
   } from "@mui/icons-material";
   import { useState } from "react";
@@ -19,14 +20,16 @@ import {
     const [post, setPost] = useState("");
     const { _id } = useSelector((state) => state.user);
     const token = useSelector((state) => state.token);
-  
+    let imageUrl = null;
+
     const handlePost = async () => {
-      const formData = new FormData();
-      formData.append("userId", _id);
-      formData.append("description", post);
+      // const formData = new FormData();
+
+      // formData.append("userId", _id);
+      // formData.append("description", post);
       if (image) {
-        formData.append("picture", image); // TODO: write code of uploading it in backend here.
-        formData.append("picturePath", image.name);
+        //formData.append("picture", image); // TODO: write code of uploading it in backend here.
+        
         // get s3 url 
         const { url } = await fetch(`${API_URL}/posts/s3Url?contentType=${image.type}`).then(res => res.json());
 
@@ -39,15 +42,25 @@ import {
           body: image
         });
         // add this in the data
-        const imageUrl = url.split('?')[0]
+        imageUrl = url.split('?')[0]
+        // formData.append("picturePath", imageUrl);
+        console.log("id",_id)
         console.log(imageUrl)
-
+        
       }
-  
+      const payload = {
+        userId: _id,
+        description: post,
+        picturePath: imageUrl,
+      };
+
       const response = await fetch(`${API_URL}/posts`, {
         method: "POST",
-        headers: { Authorization: `Bearer ${token}` },
-        body: formData,
+        headers: { 
+          "Authorization": `Bearer ${token}`,
+          "Content-Type": "application/json" 
+        },
+        body: JSON.stringify(payload),
       });
       const posts = await response.json();
       dispatch(setPosts({ posts }));
