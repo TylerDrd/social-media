@@ -63,10 +63,26 @@ const Form = () => {
   const register = async (values, onSubmitProps) => {
     const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
     const formData = new FormData();
+    let imageUrl = null;
     for (let value in values) {
-      formData.append(value, values[value]);
+      if (value === "picture") {
+        console.log("Hello world");
+        const { url } = await fetch(`${API_URL}/posts/s3Url?contentType=${values[value].type}`).then(res => res.json());
+
+        // posting image in S3
+        await fetch(url, {
+          method: "PUT",
+          body: values[value]
+        });
+        // add this in the data
+        imageUrl = url.split('?')[0] 
+        formData.append("picturePath", imageUrl);
+      }else{
+        formData.append(value, values[value]);
+      }
+      
     }
-    formData.append("picturePath", values.picture.name);
+    
 
     const savedUserResponse = await fetch(
       `${API_URL}/auth/register`,
