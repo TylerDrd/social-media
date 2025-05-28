@@ -35,7 +35,8 @@ app.use("/assets", express.static(path.join(__dirname, "public/assets"))); //sto
 
 const allowedOrigins = [
   'http://localhost:5173',
-  'https://social-media-45w7mb049-jainil-patels-projects-c6189d1f.vercel.app'
+  'https://social-media-45w7mb049-jainil-patels-projects-c6189d1f.vercel.app',
+  'https://social-media-theta-topaz.vercel.app'
 ];
 
 app.use(cors({
