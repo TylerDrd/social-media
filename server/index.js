@@ -104,6 +104,3 @@ mongoose
   })
   .catch((error) => console.log(`${error} did not connect`));
 
-  //jainilpatel0909 - username
-  //QZYqrkjL8sH3wD9S - password
-  //database credentials
