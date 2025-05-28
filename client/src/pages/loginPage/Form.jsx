@@ -60,44 +60,58 @@ const Form = () => {
   const isLogin = pageType === "login";
   const isRegister = pageType === "register";
 
-  const register = async (values, onSubmitProps) => {
-    const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
-    const formData = new FormData();
-    let imageUrl = null;
-    for (let value in values) {
-      if (value === "picture") {
-        console.log("Hello world");
-        const { url } = await fetch(`${API_URL}/posts/s3Url?contentType=${values[value].type}`).then(res => res.json());
+const register = async (values, onSubmitProps) => {
+  const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
-        // posting image in S3
-        await fetch(url, {
-          method: "PUT",
-          body: values[value]
-        });
-        // add this in the data
-        imageUrl = url.split('?')[0] 
-        formData.append("picturePath", imageUrl);
-      }else{
-        formData.append(value, values[value]);
-      }
-      
-    }
-    
+  let imageUrl = "";
 
-    const savedUserResponse = await fetch(
-      `${API_URL}/auth/register`,
-      {
-        method: "POST",
-        body: formData,
-      }
-    );
-    const savedUser = await savedUserResponse.json();
-    onSubmitProps.resetForm();
+  if (values.picture) {
+    // Step 1: Get S3 URL
+    const { url } = await fetch(`${API_URL}/posts/s3Url?contentType=${values.picture.type}`)
+      .then(res => res.json());
 
-    if (savedUser) {
-      setPageType("login");
-    }
+    // Step 2: Upload image to S3
+    await fetch(url, {
+      method: "PUT",
+      body: values.picture
+    });
+
+    // Step 3: Get final image URL
+    imageUrl = url.split('?')[0];
+  }
+
+  // Step 4: Create clean payload
+  const payload = {
+    firstName: values.firstName,
+    lastName: values.lastName,
+    email: values.email,
+    password: values.password,
+    location: values.location,
+    occupation: values.occupation,
+    picturePath: imageUrl,
+    twitter: values.twitter,
+    linkedin: values.linkedin,
   };
+
+  // Step 5: Send JSON to backend
+  const savedUserResponse = await fetch(`${API_URL}/auth/register`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
+
+  const savedUser = await savedUserResponse.json();
+  onSubmitProps.resetForm();
+
+  if (savedUserResponse.ok) {
+    setPageType("login");
+  } else {
+    console.error("Registration failed:", savedUser.message || savedUser.error);
+  }
+};
+
 
   const login = async (values, onSubmitProps) => {
     try {

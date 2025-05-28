@@ -5,6 +5,8 @@ import User from "../models/User.js";
 /* REGISTER USER */
 export const register = async (req, res) => {
   try {
+    
+
     const {
       firstName,
       lastName,
@@ -17,6 +19,16 @@ export const register = async (req, res) => {
       twitter,
       linkedin
     } = req.body;
+
+    console.log(req.body)
+    
+    if (!email ) {
+      return res.status(400).json({ message: "Missing email" });
+    }
+
+    if (!password) {
+      return res.status(400).json({ message: "Missing password" });
+    }
 
     const salt = await bcrypt.genSalt();//this is encryption, we will use this salt to encrypt our password
     const passwordHash = await bcrypt.hash(password, salt);

@@ -82,7 +82,7 @@ app.use("/auth", authRoutes);
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
 
-app.post("/auth/register", upload.single("picture"), register); // not in routes because we need to use 'upload'
+app.post("/auth/register", register); // not in routes because we need to use 'upload'
 //route,middleware (store image locally in assets/public),actual logic which is storing register info
 app.post("/posts", verifyToken, createPost);
 
